@@ -4,7 +4,7 @@ load("ToyExample.mat")
 
 sigma = .5;
 
-idx = classification_spectrale(Data, 2, sigma);
+[idx, D] = classification_spectrale(Data, 2, sigma);
 
 Data1 = Data(:,1);
 Data2 = Data(:,2);
