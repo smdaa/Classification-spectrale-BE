@@ -1,7 +1,8 @@
 clear all;
 
 % Read Data
-Data = readmatrix('/home/smdaa/2021Cluster/examples2018/COORD/sphere2/sphere2.txt');
+Data = readmatrix('/home/smdaa/2021Cluster/examples2018/COORD/sphere2a/sphere2a.txt');
+Data=Data(2:end, :);
 figure();
 plot3(Data(:,1),Data(:,2),Data(:,3),'g.','MarkerSize',15);
 
@@ -15,7 +16,7 @@ A = A - diag(diag(A));
 % Construction de la matrice normalisée L
 D_sqrt_inv = diag(sqrt(1 ./ sum(A, 2)));
 L          = D_sqrt_inv * A * D_sqrt_inv;
-%writematrix(L,'/home/smdaa/nosave/test_eigen/sphere2/sphere2.txt', 'Delimiter', ' ')
+% writematrix(L,'/home/smdaa/nosave/test_eigen/sphere2a/sphere2a.txt', 'Delimiter', ' ')
 
 % Construction de la matrice X formée à partir des k plus grandes vap de L
 [X, D] = eig(L);
@@ -23,4 +24,4 @@ L          = D_sqrt_inv * A * D_sqrt_inv;
 X = X(:,indices_tri);
 X = X(:, 1:k);
 X = flip(X, 2);
-%writematrix(X,'/home/smdaa/nosave/test_eigen/sphere2/V.txt', 'Delimiter', ' ')
+% writematrix(X,'/home/smdaa/nosave/test_eigen/sphere2a/V.txt', 'Delimiter', ' ')
