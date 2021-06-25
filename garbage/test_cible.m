@@ -1,14 +1,14 @@
+clear all;
+clc;
+close all;
 
 % Read Data
 Data = readmatrix('/home/smdaa/2021Cluster/examples2018/COORD/cible/cible.txt');
-Data=Data(2:end, :);
-figure();
-scatter(Data(:,1), Data(:,2));
 
-sigma = .5;
+sigma = calculsigma(Data)
 k     = 4;
 
-[idx, D] = classification_spectrale(Data, k, sigma);
+[idx, L] = classification_spectrale(Data, k, sigma, 'N', 0);
 Data1 = Data(:,1);
 Data2 = Data(:,2);
 
