@@ -2,26 +2,25 @@ clear all;
 close all;
 clc;
 
+% cible          k = 4      OK      alpha = 7
 % sphere2        k = 2      OK      alpha = 3
 % sphere2a       k = 2      OK      alpha = 3
-% cible          k = 4
-% toy            k = 2
-% croix          k = 5      OK      alpha = 3
-% spiral         k = 3      OK      alpha = 3
-% damier         k = 25     OK      alpha = 1.5   
+% croix          k = 5      OK      alpha = 3     
+% damier2        k = 25     OK      alpha = 5         Sigma = .2
+% damier         k = 25     OK      alpha = 5         Sigma = .2
+% toy            k = 2      OK      alpha = 7         Sigma = .2
 dataset  = 'damier';
 k        = 25;
-alpha    = 1.5;
-
+alpha    = 5;
 
 % Read Data
 Data = readmatrix(['/home/smdaa/2021Cluster/examples2018/COORD/', dataset, '/', dataset, '.txt']);
 Data=Data(2:end, :);
-%Data = Data(:, 1:2);
-n    = size(Data, 2);
+
+[n, p] = size(Data);
 Data1 = Data(:,1);
 Data2 = Data(:,2);
-if n==3
+if p==3
     Data3 = Data(:, 3);
 end
 
@@ -30,7 +29,8 @@ colors = distinguishable_colors(k);
 
 % Calcul Sigma
 Sigma = calculsigma(Data);
-Sigma = .5;
+% pour damier
+Sigma = .2;
 
 % Calcul Treshold
 Treshold = alpha * Sigma;
@@ -39,24 +39,27 @@ Treshold = alpha * Sigma;
 [idx, L, X] = classification_spectrale(Data, k, Sigma, 'Y', Treshold);
 
 % save L matrix to mtx format
-mtxwrite(L, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '.mtx']);
+%mtxwrite(L, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '.mtx']);
 
 % save eigen vectors to txt format
-X = flip(X, 2);
-writematrix(X, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/V.txt'], 'Delimiter', ' ')
+%X = flip(X, 2);
+%writematrix(X, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/X.txt'], 'Delimiter', ' ')
 
 figure()
 for i=1:k-1
-   if n==3
+   if p==3
        plot3(Data1(idx == i), Data2(idx == i),Data3(idx == i), 'color', colors(i, :), 'Marker', '*', 'LineStyle', 'none');grid on;hold on
-   elseif n==2
+   elseif p==2
        plot(Data1(idx == i), Data2(idx == i), 'color', colors(i, :), 'Marker', '*', 'LineStyle', 'none');grid on;hold on
    end
 end
-if n==3
+if p==3
     plot3(Data1(idx == k), Data2(idx == k),Data3(idx == k), 'color', colors(k, :), 'Marker', '*', 'LineStyle', 'none');grid on
-elseif n==2
-    plot(Data1(idx == k), Data2(idx == k), 'color', colors(k, :), 'Marker', '*', 'LineStyle', 'none');grid on
+elseif p==2
+    plot(Data1(idx == k), Data2(idx == k), 'color', colors(k, :), 'Marker', '*', 'LineStyle', 'none');
 end
 
 disp(nnz(L) / size(Data, 1)^2)
+%figure();
+%spy(L);
+%saveas(gcf,[dataset, '.png'])
