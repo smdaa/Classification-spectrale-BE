@@ -13,9 +13,9 @@ clc;
 % jain           k = 2      OK      alpha = 3
 % spiral         k = 3      OK      alpha = 3
 
-dataset  = 'spiral';
-k        = 3;
-alpha    = 3;
+dataset  = 'aggregation';
+k        = 7;
+alpha    = 7;
 
 % Read Data
 Data = readmatrix(['/home/smdaa/2021Cluster/examples2018/COORD/', dataset, '/', dataset, '.txt']);
@@ -36,7 +36,7 @@ colors = distinguishable_colors(k);
 % Calcul Sigma
 Sigma = calculsigma(Data);
 % pour damier
-%Sigma = .5;
+Sigma = .2;
 
 % Calcul Treshold
 Treshold = alpha * Sigma;

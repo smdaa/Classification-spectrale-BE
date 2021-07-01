@@ -8,7 +8,7 @@ if strcmp(sparsification, 'Y')
     A(A ~= 0) = exp(-A(A ~= 0).^2 ./ (2 * (sigma^2)));
     D_sqrt_inv = sparse(diag(sqrt(1 ./ sum(A, 2))));
     L          = sparse(D_sqrt_inv * A * D_sqrt_inv);
-    [X, ~] = eigs(L, k, 'largestabs', 'MaxIterations', 2000, 'Tolerance',1e-12);
+    [X, ~] = eigs(L, k, 'largestabs', 'MaxIterations', 2000, 'Tolerance',1e-14);
     %[X, ~] = eigs(L, k);
 else
     

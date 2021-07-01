@@ -1,0 +1,1 @@
+/home/smdaa/2021Cluster/examples2018/COORD/compound/compound.txt
