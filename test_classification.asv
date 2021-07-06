@@ -13,8 +13,8 @@ clc;
 % jain           k = 2      OK      alpha = 3
 % spiral         k = 3      OK      alpha = 3
 
-dataset  = 'aggregation';
-k        = 7;
+dataset  = 'cible';
+k        = 4;
 alpha    = 7;
 
 % Read Data
@@ -36,7 +36,7 @@ colors = distinguishable_colors(k);
 % Calcul Sigma
 Sigma = calculsigma(Data);
 % pour damier
-Sigma = .2;
+%Sigma = .5;
 
 % Calcul Treshold
 Treshold = alpha * Sigma;
@@ -67,8 +67,21 @@ end
 
 saveas(gcf,[dataset, 'class.png'])
 
+L1 = sparse(L(1:(n/4), :));
+L2 = sparse(L((n/4)+1:end,:));
+
+mtxwrite(L1, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '1.mtx']);
+mtxwrite(L2, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '2.mtx']);
 
 disp(nnz(L) / size(Data, 1)^2)
-%figure();
-%spy(L);
-%saveas(gcf,[dataset, '.png'])
+figure();
+spy(L);
+saveas(gcf,[dataset, '.png'])
+
+figure();
+spy(L1);
+saveas(gcf,[dataset, '1.png'])
+
+figure();
+spy(L2);
+saveas(gcf,[dataset, '2.png'])

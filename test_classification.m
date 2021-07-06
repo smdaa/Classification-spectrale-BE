@@ -13,9 +13,9 @@ clc;
 % jain           k = 2      OK      alpha = 3
 % spiral         k = 3      OK      alpha = 3
 
-dataset  = 'spiral';
-k        = 3;
-alpha    = 3;
+dataset  = 'cible';
+k        = 4;
+alpha    = 7;
 
 % Read Data
 Data = readmatrix(['/home/smdaa/2021Cluster/examples2018/COORD/', dataset, '/', dataset, '.txt']);
@@ -67,8 +67,34 @@ end
 
 saveas(gcf,[dataset, 'class.png'])
 
+L1 = sparse(L(1:(n/4), :));
+L2 = sparse(L((n/4)+1:(n/2), :));
+L3 = sparse(L((n/2)+1:(3*n/4), :));
+L4 = sparse(L((3*n/4)+1:end, :));
+
+mtxwrite(L1, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '1.mtx']);
+mtxwrite(L2, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '2.mtx']);
+mtxwrite(L3, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '3.mtx']);
+mtxwrite(L4, ['/home/smdaa/nosave/test_eigen/', dataset, '_sparse/', dataset, '4.mtx']);
+
 
 disp(nnz(L) / size(Data, 1)^2)
-%figure();
-%spy(L);
-%saveas(gcf,[dataset, '.png'])
+figure();
+spy(L);
+saveas(gcf,[dataset, '.png'])
+
+figure();
+spy(L1);
+saveas(gcf,[dataset, '1.png'])
+
+figure();
+spy(L2);
+saveas(gcf,[dataset, '2.png'])
+
+figure();
+spy(L3);
+saveas(gcf,[dataset, '3.png'])
+
+figure();
+spy(L4);
+saveas(gcf,[dataset, '4.png'])
